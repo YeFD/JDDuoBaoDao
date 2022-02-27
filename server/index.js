@@ -20,7 +20,7 @@ let NextRefreshTime = 10000;
 // let RequestDelay = 100;
 
 // 拍下时间
-let OfferPriceDelay = 700;
+let OfferPriceDelay;
 
 // 自动加价:出最高价
 let Mode = true;
@@ -50,6 +50,7 @@ function goToBid(id, price, modeValue) {
 	Item_URL = API.item_url + Item_ID;
 	NextRefreshTime = 10000;
 	BidMaxPrice = false;
+	OfferPriceDelay = 500;
 	console.log(`商品ID: ${Item_ID}, 最高价: ${MaxPrice}, 是否加价: ${Mode}, 刷新频率: ${NextRefreshTime}`)
 	initBid();
 }
@@ -121,7 +122,7 @@ async function initBid() {
 				if (post_data) {
 					let post_data_obj = querystring.parse(post_data);
 
-					if (!OfferPricePara && post_data_obj.functionId && post_data_obj.functionId === "paipai.auction.offerPrice") {
+					if (post_data_obj.functionId && post_data_obj.functionId === "paipai.auction.offerPrice") {
 
 						let body = post_data_obj.body
 
